@@ -4,11 +4,21 @@ A simple ON / OFF toggle switch built using HTML, CSS and JavaScript.
 
 ## Preview
 
-OFF
-![OFF](images/off.png)
+<table>
+<tr>
+<td align="center">
 
-ON
-![ON](images/on.png)
+OFF <img src="images/off.png" width="250">
+
+</td>
+
+<td align="center">
+
+ON <img src="images/on.png" width="250">
+
+</td>
+</tr>
+</table>
 
 ## How to Run
 
@@ -25,4 +35,5 @@ Open it in your browser.
 ---
 
 ⭐ If you like this project, please give this repository a **star**.
+
 
