@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smooth Toggle</title>
+
+<style>
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#e0e0e0;
+font-family:Arial;
+}
+
+.toggle{
+width:220px;
+height:90px;
+background:#444;
+border-radius:50px;
+position:relative;
+cursor:pointer;
+transition:0.5s;
+}
+
+/* circle */
+
+.circle{
+width:70px;
+height:70px;
+background:white;
+border-radius:50%;
+position:absolute;
+left:10px;
+top:10px;
+transition:0.5s;
+box-shadow:0 5px 10px rgba(0,0,0,0.3);
+}
+
+/* text */
+
+.text{
+position:absolute;
+right:35px;
+top:50%;
+transform:translateY(-50%);
+font-size:30px;
+font-weight:bold;
+color:#222;
+transition:0.3s;
+}
+
+/* ON state */
+
+.toggle.active{
+background:#222;
+}
+
+/* circle move */
+
+.toggle.active .circle{
+transform:translateX(120px);
+}
+
+/* text position when ON */
+
+.toggle.active .text{
+left:40px;
+right:auto;
+color:#00ffd5;
+text-shadow:0 0 10px #00ffd5,0 0 20px #00ffd5;
+transition-delay:0.25s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="toggle" id="toggle">
+<div class="circle"></div>
+<span class="text" id="text">OFF</span>
+</div>
+
+<script>
+
+let toggle=document.getElementById("toggle");
+let text=document.getElementById("text");
+
+toggle.onclick=function(){
+
+toggle.classList.toggle("active");
+
+if(toggle.classList.contains("active")){
+text.innerHTML="ON";
+}else{
+text.innerHTML="OFF";
+}
+
+}
+
+</script>
+
+</body>
+</html>
+
