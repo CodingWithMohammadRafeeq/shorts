@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Send Animation</title>
+
+<style>
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#e6e8ef;
+font-family:sans-serif;
+overflow:hidden;
+}
+
+.container{
+position:relative;
+width:300px;
+height:220px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* BUTTON */
+
+button{
+width:170px;
+height:52px;
+background:#3a6ff7;
+border:none;
+border-radius:8px;
+color:white;
+font-size:18px;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+transition:.35s;
+z-index:5; /* important */
+}
+
+/* ripple effect */
+
+button::after{
+content:"";
+position:absolute;
+width:12px;
+height:12px;
+background:rgba(255,255,255,.6);
+border-radius:50%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+opacity:0;
+pointer-events:none;
+}
+
+button.ripple::after{
+animation:ripple .6s forwards;
+}
+
+@keyframes ripple{
+
+0%{
+transform:translate(-50%,-50%) scale(0);
+opacity:.8;
+}
+
+100%{
+transform:translate(-50%,-50%) scale(18);
+opacity:0;
+}
+
+}
+
+/* morph circle */
+
+button.morph{
+width:65px;
+height:65px;
+border-radius:50%;
+font-size:0;
+}
+
+/* PAPER PLANE */
+
+.plane{
+position:absolute;
+width:85px;
+height:85px;
+opacity:0;
+filter:drop-shadow(0 8px 10px rgba(0,0,0,.15));
+transform:translate3d(0,0,0);
+will-change:transform;
+pointer-events:none; /* important */
+}
+
+/* smooth flight */
+
+.fly{
+animation:flyPlane 2.2s linear forwards;
+}
+
+@keyframes flyPlane{
+
+0%{
+transform:translate3d(0,0,0) rotate(0deg);
+}
+
+50%{
+transform:translate3d(260px,-300px,0) rotate(18deg);
+}
+
+100%{
+transform:translate3d(520px,-620px,0) rotate(30deg);
+opacity:0;
+}
+
+}
+
+/* smoke particles */
+
+.smoke{
+position:absolute;
+width:6px;
+height:6px;
+background:#bbb;
+border-radius:50%;
+opacity:.8;
+animation:smokeMove 1.7s linear forwards;
+pointer-events:none; /* important */
+}
+
+@keyframes smokeMove{
+
+0%{
+transform:translate(0,0) scale(1);
+opacity:.8;
+}
+
+100%{
+transform:translate(-120px,110px) scale(2.5);
+opacity:0;
+}
+
+}
+
+/* SENT TEXT */
+
+.sent{
+position:absolute;
+top:120px;
+font-size:19px;
+color:#555;
+opacity:0;
+transform:scale(.9);
+transition:.4s;
+pointer-events:none;
+}
+
+.sent.show{
+opacity:1;
+transform:scale(1);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<button id="btn">Send</button>
+
+<!-- PAPER PLANE -->
+
+<svg class="plane" id="plane" viewBox="0 0 512 512">
+
+<path fill="#3a6ff7"
+d="M32 256L480 32L320 480L256 320L32 256Z"/>
+
+<path fill="#ffffff"
+d="M230 300L380 150L260 330L230 300Z"
+opacity="0.6"/>
+
+</svg>
+
+<div class="sent" id="sent">Sent ✔</div>
+
+</div>
+
+<script>
+
+let btn=document.getElementById("btn");
+let plane=document.getElementById("plane");
+let sent=document.getElementById("sent");
+let container=document.querySelector(".container");
+
+btn.onclick=function(){
+
+btn.classList.add("ripple");
+
+/* morph */
+
+setTimeout(()=>{
+btn.classList.add("morph");
+},250);
+
+/* show plane */
+
+setTimeout(()=>{
+btn.style.opacity="0";
+plane.style.opacity="1";
+},500);
+
+/* fly */
+
+setTimeout(()=>{
+plane.classList.add("fly");
+},700);
+
+/* smoke */
+
+setTimeout(()=>{
+
+for(let i=0;i<12;i++){
+
+let s=document.createElement("div");
+s.className="smoke";
+
+s.style.left="150px";
+s.style.top="90px";
+
+container.appendChild(s);
+
+}
+
+},750);
+
+/* show sent */
+
+setTimeout(()=>{
+sent.classList.add("show");
+},2600);
+
+}
+
+</script>
+
+</body>
+</html>
