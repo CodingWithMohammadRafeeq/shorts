@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Indian Flag Ceremony</title>
+
+<style>
+
+    body{
+        margin:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:white;
+        font-family:Arial;
+        overflow:hidden;
+    }
+
+    /* gap between button and flag */
+
+    .wrapper{
+        display:flex;
+        align-items:center;
+        gap:180px;
+    }
+
+    /* button */
+
+    button{
+        padding:12px 26px;
+        font-size:18px;
+        background:#FF9933;
+        color:white;
+        border:none;
+        border-radius:6px;
+        cursor:pointer;
+    }
+
+    /* camera zoom */
+
+    .scene{
+        position:relative;
+        height:500px;
+        width:220px;
+        transition:transform 2s ease;
+    }
+
+    .scene.zoom{
+        transform:scale(1.15);
+    }
+
+    /* pole */
+
+    .pole{
+        position:absolute;
+        left:107px;
+        bottom:95px;
+        width:6px;
+        height:380px;
+        background:#333;
+    }
+
+    /* pulley */
+
+    .pulley{
+        position:absolute;
+        top:-8px;
+        left:95px;
+        width:26px;
+        height:26px;
+        border-radius:50%;
+        background:#888;
+        border:4px solid #666;
+    }
+
+    .pulley.rotate{
+        animation:pulleySpin 2s linear;
+    }
+
+    @keyframes pulleySpin{
+        from{transform:rotate(0deg);}
+        to{transform:rotate(360deg);}
+    }
+
+    /* rope */
+
+    .rope{
+        position:absolute;
+        left:110px;
+        top:0;
+        width:2px;
+        height:380px;
+        background:#aaa;
+        transition:transform 2s linear;
+    }
+
+    .rope.pull{
+        transform:translateY(80px);
+    }
+
+    /* knot */
+
+    .knot{
+        position:absolute;
+        top:18px;
+        left:107px;
+        width:10px;
+        height:10px;
+        background:#444;
+        border-radius:50%;
+    }
+
+    /* flag */
+
+    .flag{
+        position:absolute;
+        top:18px;
+        left:113px;
+        width:230px;
+        height:20px;
+        overflow:hidden;
+        transition:height 1s ease;
+    }
+
+    .flag.open{
+        height:140px;
+    }
+
+    /* stripes */
+
+    .stripe{
+        height:46px;
+    }
+
+    .saffron{background:#FF9933;}
+
+    .white{
+        background:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .green{background:#138808;}
+
+    /* chakra */
+
+    .chakra{
+        width:34px;
+        height:34px;
+        border:3px solid #000080;
+        border-radius:50%;
+        position:relative;
+    }
+
+    .spoke{
+        position:absolute;
+        width:2px;
+        height:17px;
+        background:#000080;
+        top:50%;
+        left:50%;
+        transform-origin:center bottom;
+    }
+
+    /* cloth wave */
+
+    .flag.wave{
+        animation:wave 2.5s infinite ease-in-out;
+    }
+
+    @keyframes wave{
+        0%{transform:rotateZ(0deg)}
+        50%{transform:rotateZ(1.5deg)}
+        100%{transform:rotateZ(0deg)}
+    }
+
+    /* flowers */
+
+    .flower{
+        position:absolute;
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        animation:burst linear forwards;
+    }
+
+    @keyframes burst{
+        0%{
+            transform:translate(0,0);
+            opacity:1;
+        }
+        100%{
+            transform:translate(var(--x),600px);
+            opacity:0;
+        }
+    }
+
+    /* confetti */
+
+    .confetti{
+        position:absolute;
+        width:6px;
+        height:6px;
+        animation:confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall{
+        0%{
+            transform:translateY(-50px) rotate(0deg);
+        }
+        100%{
+            transform:translateY(700px) rotate(360deg);
+        }
+    }
+
+    /* pedestal */
+
+    .base{
+        position:absolute;
+        bottom:0;
+        left:50%;
+        transform:translateX(-50%);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .step1{
+        width:180px;
+        height:30px;
+        background:#138808;
+        border-radius:6px;
+        box-shadow:0 6px 10px rgba(0,0,0,0.2);
+    }
+
+    .step2{
+        width:130px;
+        height:26px;
+        background:white;
+        margin-top:6px;
+        border-radius:6px;
+        box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .step3{
+        width:90px;
+        height:22px;
+        background:#FF9933;
+        margin-top:6px;
+        border-radius:6px;
+        box-shadow:0 3px 6px rgba(0,0,0,0.15);
+    }
+
+
+
+
+
+</style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div class="scene" id="scene">
+
+            <div class="pulley" id="pulley"></div>
+
+            <div class="pole"></div>
+
+            <div class="rope" id="rope"></div>
+
+            <div class="knot" id="knot"></div>
+
+            <div class="flag" id="flag">
+
+                <div class="stripe saffron"></div>
+
+                <div class="stripe white">
+                    <div class="chakra" id="chakra"></div>
+                </div>
+
+                <div class="stripe green"></div>
+
+            </div>
+
+            <div class="base">
+                <div class="step3"></div>
+                <div class="step2"></div>
+                <div class="step1"></div>
+            </div>
+
+        </div>
+
+        <button onclick="ceremony()">Hoist Flag </button>
+
+    </div>
+
+
+    
+
+<script>
+
+    function ceremony(){
+
+        document.getElementById("rope").classList.add("pull")
+
+        document.getElementById("pulley").classList.add("rotate")
+
+        setTimeout(()=>{
+            document.getElementById("knot").style.opacity="0"
+        },700)
+
+        setTimeout(()=>{
+            document.getElementById("flag").classList.add("open")
+            document.getElementById("scene").classList.add("zoom")
+            burstFlowers()
+            confetti()
+        },900)
+
+        setTimeout(()=>{
+            document.getElementById("flag").classList.add("wave")
+        },1500)
+
+    }
+
+    /* chakra spokes */
+
+    let chakra=document.getElementById("chakra")
+
+    for(let i=0;i<24;i++){
+
+        let s=document.createElement("div")
+
+        s.className="spoke"
+
+        s.style.transform="translate(-50%,-100%) rotate("+(i*15)+"deg)"
+
+        chakra.appendChild(s)
+
+    }
+
+    /* flower burst */
+
+    function burstFlowers(){
+
+        let flag=document.getElementById("flag")
+        let rect=flag.getBoundingClientRect()
+
+        for(let i=0;i<80;i++){
+
+            let f=document.createElement("div")
+
+            f.className="flower"
+
+            f.style.left=(rect.left+rect.width/2)+"px"
+            f.style.top=(rect.top+10)+"px"
+
+            f.style.background=["#FF9933","#ffffff","#138808"][Math.floor(Math.random()*3)]
+
+            let x=(Math.random()*400-200)+"px"
+
+            f.style.setProperty("--x",x)
+
+            f.style.animationDuration=(Math.random()*2+1.5)+"s"
+
+            document.body.appendChild(f)
+
+        }
+
+    }
+
+    /* confetti */
+
+    function confetti(){
+
+        for(let i=0;i<120;i++){
+
+            let c=document.createElement("div")
+
+            c.className="confetti"
+
+            c.style.left=Math.random()*100+"vw"
+
+            c.style.background=["#FF9933","#ffffff","#138808"][Math.floor(Math.random()*3)]
+
+            c.style.animationDuration=(Math.random()*3+2)+"s"
+
+            document.body.appendChild(c)
+
+        }
+
+    }
+
+
+    
+
+</script>
+
+</body>
+</html>
