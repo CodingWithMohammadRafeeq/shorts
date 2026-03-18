@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Lamp Brightness Animation</title>
+
+<style>
+
+    body{
+        margin:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(180deg,#4d5de3,#7d6df4);
+        font-family:sans-serif;
+        overflow:hidden;
+        transition:background .4s;
+    }
+
+    /* wire */
+
+    .wire{
+        position:absolute;
+        top:0;
+        width:4px;
+        height:120px;
+        background:#44389c;
+    }
+
+    /* lamp */
+
+    .lamp{
+        position:absolute;
+        top:120px;
+        width:170px;
+        height:110px;
+        background:linear-gradient(#ff9fcb,#ff78b1);
+        border-radius:90px 90px 40px 40px;
+        box-shadow:0 15px 30px rgba(0,0,0,.25);
+    }
+
+    /* bulb */
+
+    .bulb{
+        position:absolute;
+        bottom:-18px;
+        left:50%;
+        transform:translateX(-50%);
+        width:150px;
+        height:65px;
+        background:#fff5b8;
+        border-radius:0 0 90px 90px;
+        opacity:.25;
+        transition:.3s;
+    }
+
+    /* light cone */
+
+    .light{
+        position:absolute;
+        top:210px;
+        width:460px;
+        height:360px;
+        background:radial-gradient(circle at top,rgba(255,255,210,.9),transparent 70%);
+        opacity:.1;
+        filter:blur(6px);
+        transition:.3s;
+    }
+
+    /* floor glow */
+
+    .floor{
+        position:absolute;
+        top:390px;
+        width:340px;
+        height:130px;
+        background:radial-gradient(circle,rgba(255,255,200,.6),transparent 70%);
+        opacity:.1;
+        filter:blur(10px);
+        transition:.3s;
+    }
+
+    /* control panel */
+
+    .panel{
+        position:absolute;
+        bottom:120px;
+        background:rgba(255,255,255,.15);
+        backdrop-filter:blur(14px);
+        padding:25px 40px;
+        border-radius:16px;
+        box-shadow:0 8px 25px rgba(0,0,0,.2);
+    }
+
+    /* slider */
+
+    input[type=range]{
+        width:280px;
+        cursor:pointer;
+    }
+
+
+    
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wire"></div>
+
+<div class="lamp">
+<div class="bulb"></div>
+</div>
+
+<div class="light"></div>
+<div class="floor"></div>
+
+<div class="panel">
+<input type="range" min="0" max="100" value="15" id="slider">
+</div>
+
+<script>
+
+const slider=document.getElementById("slider")
+const bulb=document.querySelector(".bulb")
+const light=document.querySelector(".light")
+const floor=document.querySelector(".floor")
+
+slider.addEventListener("input",()=>{
+
+let v=slider.value
+
+bulb.style.opacity=v/90
+light.style.opacity=v/60
+floor.style.opacity=v/70
+
+/* background brightness */
+
+document.body.style.background=
+`linear-gradient(180deg,
+rgb(${77+v/3},${93+v/4},${227+v/2}),
+rgb(${125+v/4},${109+v/5},${244+v/3}))`
+
+})
+
+</script>
+
+</body>
+</html>
+
