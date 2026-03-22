@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Password UI</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1026;
+}
+
+/* Container */
+.container {
+    width: 360px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #2a1b3d, #140d1f);
+    padding: 2px;
+}
+
+/* Box */
+.box {
+    background: #0f0a17;
+    border-radius: 16px;
+    padding: 14px 15px 30px;
+}
+
+/* Row */
+.row {
+    display: flex;
+    align-items: center;
+}
+
+/* Lock */
+.lock {
+    color: #f59e0b;
+    margin-right: 10px;
+}
+
+/* Input */
+.input-wrapper {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+/* Dots style (optional look) */
+input[type="password"] {
+    letter-spacing: 6px;
+}
+
+/* Shine */
+.text-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.input-wrapper.shine-right .text-shine,
+.input-wrapper.shine-left .text-shine {
+    opacity: 1;
+}
+
+.input-wrapper.shine-right .text-shine {
+    animation: shineRight 0.6s;
+}
+
+.input-wrapper.shine-left .text-shine {
+    animation: shineLeft 0.6s;
+}
+
+@keyframes shineRight {
+    from { left: -100%; }
+    to { left: 100%; }
+}
+
+@keyframes shineLeft {
+    from { left: 100%; }
+    to { left: -100%; }
+}
+
+/* Eye */
+.eye {
+    width: 26px;
+    height: 26px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.eye-shape {
+    fill: none;
+    stroke: #f472b6;
+    stroke-width: 1.8;
+}
+
+.pupil {
+    fill: #f472b6;
+}
+
+.slash {
+    stroke: #f472b6;
+    stroke-width: 2;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.eye.closed .slash {
+    opacity: 1;
+}
+
+/* Blink */
+.eye.blink {
+    animation: blinkAnim 0.25s ease;
+}
+
+@keyframes blinkAnim {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+    100% { transform: scaleY(1); }
+}
+
+/*  Progress Bar */
+.progress {
+    height: 6px;
+    background: #2a1b3d;
+    border-radius: 6px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 6px;
+    transition: 0.4s ease;
+}
+
+/* Strength Colors */
+.weak {
+    width: 30%;
+    background: #ef4444;
+}
+
+.medium {
+    width: 60%;
+    background: #f59e0b;
+}
+
+.strong {
+    width: 100%;
+    background: #22c55e;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="box">
+
+        <div class="row">
+            <span class="lock">í´’</span>
+
+            <div class="input-wrapper" id="wrap">
+                <input type="password" id="password" placeholder="Enter Password">
+                <div class="text-shine"></div>
+            </div>
+
+            <svg class="eye closed" id="eye" viewBox="0 0 24 24">
+                <path class="eye-shape" d="M2 12C4.5 7 8 5 12 5s7.5 2 10 7c-2.5 5-6 7-10 7s-7.5-2-10-7z"/>
+                <circle class="pupil" cx="12" cy="12" r="2.5"/>
+                <path class="slash" d="M4 20L20 4"/>
+            </svg>
+        </div>
+
+        <!-- í´¥ Progress Fill Line -->
+        <div class="progress">
+            <div class="progress-fill" id="bar"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const input = document.getElementById("password");
+const eye = document.getElementById("eye");
+const wrap = document.getElementById("wrap");
+const bar = document.getElementById("bar");
+
+/* Eye toggle */
+eye.onclick = () => {
+
+    eye.classList.add("blink");
+    setTimeout(() => eye.classList.remove("blink"), 250);
+
+    if (input.type === "password") {
+        input.type = "text";
+        eye.classList.remove("closed");
+        wrap.classList.add("shine-right");
+    } else {
+        input.type = "password";
+        eye.classList.add("closed");
+        wrap.classList.add("shine-left");
+    }
+
+    setTimeout(() => {
+        wrap.classList.remove("shine-right", "shine-left");
+    }, 600);
+};
+
+/* Progress Fill */
+input.addEventListener("input", () => {
+
+    const val = input.value;
+
+    if (val.length === 0) {
+        bar.className = "progress-fill";
+    } else if (val.length < 4) {
+        bar.className = "progress-fill weak";
+    } else if (val.length < 8) {
+        bar.className = "progress-fill medium";
+    } else {
+        bar.className = "progress-fill strong";
+    }
+});
+</script>
+
+</body>
+</html>
