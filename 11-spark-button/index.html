@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spark Button ✨</title>
+
+<style>
+
+
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    font-family: sans-serif;
+}
+
+/* DEFAULT = COLORED */
+button {
+    position: relative;
+    padding: 15px 45px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #000;
+    background: #00f7ff;
+    border: 2px solid #00f7ff;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: visible;
+    transition: 0.3s;
+}
+
+/* HOVER = BLACK STYLE */
+button:hover {
+    color: #00f7ff;
+    background: transparent;
+    box-shadow: 0 0 15px #00f7ff, 0 0 35px #00f7ff;
+}
+
+/* SPARKS */
+.spark {
+    position: absolute;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+button:hover .spark {
+    opacity: 1;
+}
+
+/* POSITIONS */
+.spark:nth-child(1) { top: -20px; left: 10%; }
+.spark:nth-child(2) { top: -15px; right: 20%; }
+.spark:nth-child(3) { bottom: -20px; left: 20%; }
+.spark:nth-child(4) { bottom: -15px; right: 10%; }
+.spark:nth-child(5) { top: 50%; left: -20px; }
+.spark:nth-child(6) { top: 50%; right: -20px; }
+
+/* ANIMATION */
+button:hover .spark {
+    animation: sparkle 1.2s infinite ease-in-out;
+}
+
+.spark:nth-child(odd) { animation-delay: 0.2s; }
+.spark:nth-child(even) { animation-delay: 0.6s; }
+
+@keyframes sparkle {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.5); opacity: 0; }
+}
+
+
+
+
+
+</style>
+
+</head>
+<body>
+
+<button>
+    Spark
+
+    <span class="spark">✦</span>
+    <span class="spark">✦</span>
+    <span class="spark">✦</span>
+    <span class="spark">✦</span>
+    <span class="spark">✦</span>
+    <span class="spark">✦</span>
+</button>
+
+</body>
+</html>
