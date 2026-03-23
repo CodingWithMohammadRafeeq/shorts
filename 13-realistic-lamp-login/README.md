@@ -8,56 +8,61 @@ Pull the string to turn on the light and reveal the login form ‚ú®
 ## Ì∫Ä Preview
 
 <p align="center">
-  <img src="preview1.png" width="45%">
-  <img src="preview2.png" width="45%">
+  <img src="./images/preview1.png" width="32%">
+  <img src="./images/preview2.png" width="32%">
+  <img src="./images/preview3.png" width="32%">
 </p>
 
 ---
 
-## ÌæØ Features
+## ‚ú® Features
 
-‚ú® Realistic lamp design with shadows
-‚ú® Pullable thread interaction
-‚ú® Smooth light glow effect
-‚ú® Animated login form reveal
-‚ú® Clean glassmorphism UI
-‚ú® Pure HTML + CSS + JavaScript
+* Realistic lamp design with shadows
+* Pullable thread interaction
+* Smooth light glow effect
+* Animated login form reveal
+* Clean glassmorphism UI
+* Pure HTML, CSS and JavaScript
 
 ---
 
 ## ÌæÆ How It Works
 
-* Grab the lamp string
-* Pull it down
-* Lamp turns ON Ì≤°
-* Login form appears smoothly
+1. Grab the lamp string
+2. Pull it down
+3. Lamp turns ON Ì≤°
+4. Login form appears smoothly
 
 ---
 
 ## Ìª†Ô∏è Tech Used
 
 * HTML5
-* CSS3 (Gradients + Shadows + Blur)
+* CSS3 (Gradients, Shadows, Blur)
 * Vanilla JavaScript
 
 ---
 
 ## Ì≥Ç Project Structure
 
-```
-index.html
+```bash
+.
+‚îú‚îÄ‚îÄ index.html
+‚îú‚îÄ‚îÄ README.md
+‚îî‚îÄ‚îÄ images
+    ‚îú‚îÄ‚îÄ preview1.png
+    ‚îú‚îÄ‚îÄ preview2.png
+    ‚îî‚îÄ‚îÄ preview3.png
 ```
 
 ---
 
 ## ‚ö° Customization
 
-You can easily modify:
-
-* Ìæ® Colors ‚Üí change gradients in CSS
-* Ì≤° Light size ‚Üí edit `.light` width/height
-* Ìæ≠ Animation speed ‚Üí adjust `transition`
-* Ì∑µ String length ‚Üí edit `.string` height
+* Change colors in CSS gradients
+* Adjust light size in `.light`
+* Modify animation speed via `transition`
+* Change string length in `.string`
 
 ---
 
@@ -65,30 +70,12 @@ You can easily modify:
 
 * No libraries used
 * Lightweight and fast
-* Perfect for UI inspiration
-* Unique interaction concept
-
----
-
-## Ì≥∏ Screenshots
-
-## Ì∫Ä Preview
-
-<p align="center">
-  <img src="images/preview1.png" width="45%">
-  <img src="images/preview2.png" width="45%">
-  <img src="images/preview3.png" width="45%">
-</p>
-
----
-
-## Ì∑† Inspiration
-
-Inspired by real-life pull-switch lamps and modern UI animations.
+* Unique UI interaction
+* Perfect for frontend inspiration
 
 ---
 
 ## ‚≠ê Support
 
-If you like this project, give it a ‚≠ê and share it! Ì∫Ä
+If you like this project, share it and give it a star Ì∫Ä
 
