@@ -72,10 +72,12 @@ You can easily modify:
 
 ## í³¸ Screenshots
 
+## íº€ Preview
+
 <p align="center">
-  <img src="preview1.png" width="30%">
-  <img src="preview2.png" width="30%">
-  <img src="preview3.png" width="30%">
+  <img src="images/preview1.png" width="45%">
+  <img src="images/preview2.png" width="45%">
+  <img src="images/preview3.png" width="45%">
 </p>
 
 ---
