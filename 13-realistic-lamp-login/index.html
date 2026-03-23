@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Realistic Lamp Login</title>
+
+<style>
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: radial-gradient(circle at top, #1a2a33, #0b141a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    align-items: center;
+    gap: 120px;
+}
+
+/* LAMP */
+.lamp {
+    position: relative;
+}
+
+/* HEAD */
+.lamp-head {
+    width: 150px;
+    height: 110px;
+    background: linear-gradient(145deg, #3a3a3a, #1c1c1c);
+    border-radius: 60% 60% 45% 45%;
+    position: relative;
+    box-shadow:inset        inset -8px -8px 15px rgba(0,0,0,0.8),
+        inset 8px 8px 10px rgba(255,255,255,0.05),
+        0 20px 40px rgba(0,0,0,0.7);
+}
+
+/* INNER LIGHT SOURCE */
+.lamp-head::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 20px;
+    background: #222;
+    border-radius: 50%;
+}
+
+/* FACE */
+.face {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.eye {
+    width: 8px;
+    height: 8px;
+    background: #111;
+    border-radius: 50%;
+    margin: 4px;
+    display: inline-block;
+}
+
+.mouth {
+    width: 18px;
+    height: 8px;
+    background: #111;
+    border-radius: 0 0 20px 20px;
+    margin: auto;
+}
+
+/* BODY */
+.lamp-body {
+    width: 12px;
+    height: 140px;
+    background: linear-gradient(#ddd, #999);
+    margin: auto;
+    border-radius: 6px;
+}
+
+.lamp-base {
+    width: 100px;
+    height: 15px;
+    background: linear-gradient(#bbb, #888);
+    border-radius: 20px;
+    margin: auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/*  REALISTIC THREAD */
+.string {
+    position: absolute;
+    top: 95px; /* exact lamp head edge */
+    right: 20px;
+    width: 2px;
+    height: 90px;
+    background: linear-gradient(#fff, #aaa);
+    cursor: grab;
+    transform-origin: top;
+}
+
+/* KNOB */
+.string::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #fff, #ccc);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* LIGHT */
+.light {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255,220,150,0.9), transparent 70%);
+    opacity: 0;
+    filter: blur(15px);
+    transition: 0.5s;
+}
+
+/* FORM */
+.form-box {
+    width: 320px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(255,140,80,0.4);
+    transform: translateX(150px);
+    opacity: 0;
+    transition: 0.6s;
+}
+
+.form-box.active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.form-box h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    margin-bottom: 15px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: linear-gradient(45deg, #ff7a3c, #ff512f);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ON STATE */
+.on .light {
+    opacity: 1;
+}
+
+.on .lamp-head {
+    background: linear-gradient(145deg, #ffd27f, #ffb347);
+}
+
+
+
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LAMP -->
+    <div class="lamp" id="lamp">
+
+        <div class="lamp-head">
+            <div class="face">
+                <span class="eye"></span>
+                <span class="eye"></span>
+                <div class="mouth"></div>
+            </div>
+        </div>
+
+        <div class="string" id="string"></div>
+        <div class="light"></div>
+
+        <div class="lamp-body"></div>
+        <div class="lamp-base"></div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-box" id="form">
+        <h2>Welcome Back</h2>
+        <div class="input-box">
+            <input type="text" placeholder="Username">
+        </div>
+        <div class="input-box">
+            <input type="password" placeholder="Password">
+        </div>
+        <button>Login</button>
+    </div>
+
+</div>
+
+<script>
+const string = document.getElementById("string");
+const lamp = document.getElementById("lamp");
+const form = document.getElementById("form");
+
+let startY = 0;
+let isDragging = false;
+
+string.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    string.style.cursor = "grabbing";
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    let move = e.clientY - startY;
+
+    if (move > 0 && move < 60) {
+        string.style.transform = `scaleY(${1 + move / 100}) translateY(${move}px)`;
+    }
+});
+
+document.addEventListener("mouseup", () => {
+    if (!isDragging) return;
+
+    isDragging = false;
+    string.style.cursor = "grab";
+    string.style.transform = "scaleY(1) translateY(0)";
+
+    lamp.classList.toggle("on");
+    form.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>
