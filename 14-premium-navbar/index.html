@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Navbar</title>
+
+<style>
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a0a;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar */
+.nav-wrapper {
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+/* Links */
+.navbar a {
+    position: relative;
+    padding: 10px 24px;
+    margin: 0 5px;
+    color: #bbb;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+/* Slider */
+.slider {
+    position: absolute;
+    height: 40px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    border-radius: 10px;
+    transition: all 0.35s ease;
+    box-shadow: 
+        0 0 10px #a855f7,
+        0 0 20px #ec4899,
+        0 0 30px #ec4899;
+    z-index: 0;
+}
+
+/* Active */
+.navbar a.active {
+    color: #fff;
+}
+
+
+
+</style>
+
+</head>
+<body>
+
+<div class="nav-wrapper">
+    <div class="navbar">
+        <div class="slider"></div>
+
+        <a href="#" class="active">Home</a>
+        <a href="#">About</a>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<script>
+const links = document.querySelectorAll(".navbar a");
+const slider = document.querySelector(".slider");
+
+function moveSlider(el) {
+    slider.style.width = el.offsetWidth + "px";
+    slider.style.left = el.offsetLeft + "px";
+}
+
+links.forEach(link => {
+    link.addEventListener("click", function() {
+        document.querySelector(".active").classList.remove("active");
+        this.classList.add("active");
+        moveSlider(this);
+    });
+
+    link.addEventListener("mouseenter", function() {
+        moveSlider(this);
+    });
+});
+
+document.querySelector(".navbar").addEventListener("mouseleave", () => {
+    moveSlider(document.querySelector(".active"));
+});
+
+window.onload = () => {
+    moveSlider(document.querySelector(".active"));
+};
+</script>
+
+</body>
+</html>
