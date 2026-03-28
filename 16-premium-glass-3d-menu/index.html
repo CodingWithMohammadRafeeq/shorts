@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium Glass 3D Menu</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #020617, #020617 40%, #020617);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* MENU */
+.menu {
+  width: 280px;
+}
+
+/* ITEM */
+.item {
+  height: 70px;
+  margin: 18px 0;
+  perspective: 1200px;
+}
+
+/* INNER */
+.inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+/* FLIP */
+.item:hover .inner {
+  transform: rotateY(180deg);
+}
+
+/* FACE */
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  backface-visibility: hidden;
+}
+
+/* FRONT - GLASS + GRADIENT */
+.front {
+  background: linear-gradient(135deg, rgba(99,102,241,0.7), rgba(168,85,247,0.6));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.6),
+    inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* BACK - DARK PREMIUM */
+.back {
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  transform: rotateY(180deg);
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.7);
+}
+
+/* GLOW ON HOVER */
+.item:hover .front {
+  box-shadow:
+    0 0 25px rgba(139,92,246,0.7),
+    0 0 60px rgba(99,102,241,0.4),
+    0 15px 40px rgba(0,0,0,0.8);
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="menu">
+
+  <div class="item">
+    <div class="inner">
+      <div class="face front">Home</div>
+      <div class="face back">Home</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="inner">
+      <div class="face front">About</div>
+      <div class="face back">About</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="inner">
+      <div class="face front">Clients</div>
+      <div class="face back">Clients</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="inner">
+      <div class="face front">Work</div>
+      <div class="face back">Work</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="inner">
+      <div class="face front">Contact Us</div>
+      <div class="face back">Contact Us</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
