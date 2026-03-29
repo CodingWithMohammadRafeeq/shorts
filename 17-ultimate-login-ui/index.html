@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Login UI</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN */
+.container {
+  width: 900px;
+  height: 500px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* FORM */
+.form-box {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  padding: 60px;
+  transition: 0.6s;
+  color: white;
+}
+
+.sign-in { left: 0; z-index: 2; }
+.sign-up {
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.container.active .sign-in {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*  INPUT FIXED */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.3);
+  color: #000;
+  font-weight: 500;
+}
+
+input::placeholder {
+  color: rgba(0,0,0,0.6);
+}
+
+/* BUTTON */
+button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-box button {
+  background: linear-gradient(135deg, #ff6ec7, #b06cff);
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(270deg, #ff6ec7, #b06cff, #ff6ec7);
+  background-size: 400% 400%;
+  animation: gradientMove 6s infinite;
+  border-radius: 200px 0 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0%;}
+  50% {background-position: 100%;}
+  100% {background-position: 0%;}
+}
+
+.container.active .overlay {
+  transform: translateX(-100%);
+  border-radius: 0 200px 200px 0;
+}
+
+.overlay button {
+  background: white;
+  color: #b06cff;
+  font-weight: bold;
+}
+
+/* FACE */
+.face {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+/*  EYE */
+.eye {
+  width: 34px;
+  height: 34px;
+  background: white;
+  border-radius: 50%;
+  margin: 5px;
+  position: relative;
+  overflow: hidden;
+}
+/* Ì±ÅÔ∏è PUPIL */
+.pupil {
+  width: 12px;
+  height: 12px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  transition: 0.1s;
+}
+/* ‚ú® SHINE */
+.pupil::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background: white;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+}
+/*  EYELID (BLINK) */
+.eye::before,
+.eye::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  background: #dcdcdc;
+  left: 0;
+  z-index: 2;
+  transition: height 0.15s ease;
+}
+
+.eye::before { top: 0; }
+.eye::after { bottom: 0; }
+
+.eye.blink::before,
+.eye.blink::after {
+  height: 50%;
+}
+
+/*  SMILE */
+.smile {
+  width: 40px;
+  height: 20px;
+  border-bottom: 3px solid white;
+  border-radius: 0 0 40px 40px;
+  margin: 0 auto 20px;
+  transition: 0.3s;
+}
+.container.active .smile {
+  transform: rotate(180deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+  <!-- SIGN IN -->
+  <div class="form-box sign-in">
+    <div class="face">
+      <div class="eye"><div class="pupil"></div></div>
+      <div class="eye"><div class="pupil"></div></div>
+    </div>
+    <div class="smile"></div>
+
+    <h2>Sign in</h2>
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Sign In</button>
+  </div>
+
+  <!-- SIGN UP -->
+  <div class="form-box sign-up">
+    <div class="face">
+      <div class="eye"><div class="pupil"></div></div>
+      <div class="eye"><div class="pupil"></div></div>
+    </div>
+    <div class="smile"></div>
+
+    <h2>Create Account</h2>
+    <input type="text" placeholder="Name">
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Sign Up</button>
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="overlay">
+    <div>
+      <h1 id="title">Hello, Friend!</h1>
+      <button id="toggleBtn">SIGN UP</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const container = document.getElementById("container");
+const btn = document.getElementById("toggleBtn");
+const title = document.getElementById("title");
+
+btn.onclick = () => {
+  container.classList.toggle("active");
+
+  if (container.classList.contains("active")) {
+    btn.innerText = "SIGN IN";
+    title.innerText = "Welcome Back!";
+  } else {
+    btn.innerText = "SIGN UP";
+    title.innerText = "Hello, Friend!";
+  }
+};
+
+/* Ì±Ä CURSOR FOLLOW */
+document.addEventListener("mousemove", (e) => {
+  document.querySelectorAll(".eye").forEach(eye => {
+    const pupil = eye.querySelector(".pupil");
+
+    const rect = eye.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    const angle = Math.atan2(e.clientY - y, e.clientX - x);
+
+    pupil.style.transform = `translate(${Math.cos(angle)*8}px, ${Math.sin(angle)*8}px)`;
+  });
+});
+
+/* Ì∏â REALISTIC BLINK */
+function blink(){
+  document.querySelectorAll(".eye").forEach(e=>e.classList.add("blink"));
+
+  setTimeout(()=>{
+    document.querySelectorAll(".eye").forEach(e=>e.classList.remove("blink"));
+  }, 150);
+
+  setTimeout(blink, 2000 + Math.random()*3000);
+}
+blink();
+</script>
+
+</body>
+</html>
