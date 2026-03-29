@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi Color Login</title>{
+  box-
+
+<style>  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  height: 100vh;
+
+  display: grid;
+  place-items: center;
+  background: #070a1c;
+}
+
+/* CONTAINER */
+.container {
+  position: relative;
+  width: 380px;
+  height: 380px;
+}
+
+/* RING */
+.ring {
+  position: absolute;
+  inset: 0;
+}
+
+/*  BASE BARS (DIM) */
+.ring span {
+  position: absolute;
+  width: 6px;
+  height: 26px;
+  border-radius: 10px;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%) rotate(0deg) translateY(-160px);
+
+  opacity: 0.25; /*  DIM */
+  transition: 0.2s;
+}
+
+/*  ACTIVE GLOW */
+.ring span.active {
+  opacity: 1;
+  filter: brightness(1.6);
+}  
+/* LOGIN */
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  text-align: center;
+}
+
+h2 {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* INPUT */
+.input {
+  margin-bottom: 14px;
+}
+
+.input input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #2c4a6b;
+  background: transparent;
+  color: #fff;
+  outline: none;
+}
+
+.input input:focus {
+  border-color: #00f7ff;
+  box-shadow: 0 0 10px rgba(0,247,255,0.6);
+}  
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(90deg, #00f7ff, #ff00c8);
+  color: #fff;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: 0 0 15px #00f7ff;
+}
+
+/* LINKS */
+.links {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.links a {
+  color: #00f7ff;
+  text-decoration: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="ring" id="ring"></div>
+
+  <div class="login">
+    <h2>Login</h2>
+
+    <div class="input">
+      <input type="text" placeholder="Email">
+    </div>
+
+    <div class="input">
+      <input type="password" placeholder="Password">
+    </div>
+
+    <div class="links">
+      <a href="#">Forgot your password?</a>
+    </div>
+
+    <button>Login</button>
+
+    <div class="links">
+      <a href="#">Signup</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ring = document.getElementById("ring");
+const total = 64;
+
+// í¼ˆ COLORS
+const colors = [
+  "#00f7ff", "#ff00c8", "#a855f7",
+  "#22c55e", "#f97316", "#3b82f6"
+];
+
+// CREATE BARS
+for (let i = 0; i < total; i++) {
+  let span = document.createElement("span");
+  let angle = (360 / total) * i;
+
+  span.style.transform =
+    `translate(-50%, -50%) rotate(${angle}deg) translateY(-160px)`;
+
+  span.style.background = colors[i % colors.length];
+
+  ring.appendChild(span);
+}
+
+const bars = document.querySelectorAll(".ring span");
+
+let index = 0;
+
+// í´¥ PERFECT ANIMATION
+setInterval(() => {
+  bars.forEach(b => b.classList.remove("active"));
+
+  for (let i = 0; i < 10; i++) {
+    let bar = bars[(index + i) % bars.length];
+
+    bar.classList.add("active");
+    bar.style.boxShadow = `0 0 15px ${bar.style.background}`;
+  }
+
+  index++;
+}, 70);
+</script>
+
+</body>
+</html>
