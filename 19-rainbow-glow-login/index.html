@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rainbow Glow Login</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #071a22, #020c12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* LOGIN */
+.login {
+  position: relative;
+  z-index: 2;
+  width: 320px;
+  text-align: center;
+}
+
+.login h2 {
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+/* INPUT */
+.input-box {
+  margin-bottom: 15px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  outline: none;
+}
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(90deg, #9d4edd, #3a86ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* LINKS */
+.links {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.links a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+}
+
+/* CIRCLES */
+.circle {
+  position: absolute;
+  width: 460px;
+  height: 460px;
+}
+
+.circle path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: blur(1px)
+          drop-shadow(0 0 12px currentColor)
+          drop-shadow(0 0 30px currentColor);
+  transition: stroke 0.2s;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 5 CIRCLES -->
+<div class="circle"><svg viewBox="0 0 500 500"><path id="c1"></path></svg></div>
+<div class="circle"><svg viewBox="0 0 500 500"><path id="c2"></path></svg></div>
+<div class="circle"><svg viewBox="0 0 500 500"><path id="c3"></path></svg></div>
+<div class="circle"><svg viewBox="0 0 500 500"><path id="c4"></path></svg></div>
+<div class="circle"><svg viewBox="0 0 500 500"><path id="c5"></path></svg></div>
+
+<!-- LOGIN -->
+<div class="login" id="loginBox">
+  <h2>Login</h2>
+
+  <div class="input-box">
+    <input type="text" placeholder="Username">
+  </div>
+
+  <div class="input-box">
+    <input type="password" placeholder="Password">
+  </div>
+
+  <button class="btn">Sign in</button>
+
+  <div class="links">
+    <a href="#">Forgot Password</a>
+    <a href="#">Signup</a>
+  </div>
+</div>
+
+<script>
+const circles = [
+  {id: "c1", r: 180, speed: 0.02, amp: 5},
+  {id: "c2", r: 185, speed: 0.025, amp: 6},
+  {id: "c3", r: 190, speed: 0.018, amp: 5},
+  {id: "c4", r: 195, speed: 0.022, amp: 6},
+  {id: "c5", r: 200, speed: 0.017, amp: 5}
+];
+
+let t = 0;
+let hover = false;
+
+const login = document.getElementById("loginBox");
+
+login.addEventListener("mouseenter", () => hover = true);
+login.addEventListener("mouseleave", () => hover = false);
+
+/* í¼ˆ RAINBOW FUNCTION */
+function getRainbow(t, offset) {
+  let r = Math.floor(128 + 127 * Math.sin(t + offset));
+  let g = Math.floor(128 + 127 * Math.sin(t + offset + 2));
+  let b = Math.floor(128 + 127 * Math.sin(t + offset + 4));
+  return `rgb(${r},${g},${b})`;
+}
+
+function draw(circle, t, index) {
+  let path = document.getElementById(circle.id);
+  let d = "";
+  let cx = 250, cy = 250;
+
+  for (let i = 0; i <= 360; i += 4) {
+    let rad = i * Math.PI / 180;
+    let wave = Math.sin(rad * 3 + t) * circle.amp;
+
+    let r = circle.r + wave;
+
+    let x = cx + r * Math.cos(rad);
+    let y = cy + r * Math.sin(rad);
+
+    d += (i === 0 ? "M" : "L") + x + "," + y + " ";
+  }
+
+  d += "Z";
+  path.setAttribute("d", d);
+
+  if (hover) {
+    path.style.stroke = getRainbow(t, index);
+  } else {
+    path.style.stroke = "rgba(120,150,255,0.25)";
+  }
+}
+
+function animate() {
+  circles.forEach((c, i) => draw(c, t * c.speed * 50, i));
+  t += 0.04;
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
