@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cursor Glow Button</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+
+/* Wrapper */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Button */
+.btn {
+  position: relative;
+  padding: 18px 70px;
+  font-size: 20px;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #111;
+  overflow: hidden;
+  letter-spacing: 2px;
+
+  /*  REAL MIRROR EFFECT */
+  -webkit-box-reflect: below 6px linear-gradient(transparent, rgba(0,0,0,0.6));
+}
+
+/* Cursor Glow */
+.btn::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #00f2ff, transparent 70%);
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+/* Keep text above glow */
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Click effect */
+.btn:active {
+  transform: scale(0.95);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <button class="btn"><span>ENTER</span></button>
+</div>
+
+<script>
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('mousemove', e => {
+  const rect = btn.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  btn.style.setProperty('--x', x + 'px');
+  btn.style.setProperty('--y', y + 'px');
+});
+</script>
+
+</body>
+</html>
