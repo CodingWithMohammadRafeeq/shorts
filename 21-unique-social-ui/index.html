@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unique Social UI</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eef1f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Container */
+.social-wrap {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+/* Buttons */
+.btn {
+  position: relative;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* UNIQUE POSITION SHIFT */
+.btn:nth-child(1) { transform: translateY(20px); }
+.btn:nth-child(2) { transform: translateY(-15px); }
+.btn:nth-child(3) { transform: translateY(10px); }
+.btn:nth-child(4) { transform: translateY(-10px); }
+
+/* Hover animation */
+.btn:hover {
+  transform: scale(1.2) translateY(-10px);
+}
+
+/* Tooltip */
+.tip {
+  position: absolute;
+  top: -50px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.tip::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+}
+
+/* Show tooltip */
+.btn:hover .tip {
+  opacity: 1;
+  top: -60px;
+}
+
+/* COLORS */
+
+/* Facebook */
+.fb:hover { background:#1877f2; color:white; }
+.fb .tip { background:#1877f2; }
+.fb .tip::after { border-top-color:#1877f2; }
+
+/* Instagram */
+.insta:hover { background:#e1306c; color:white; }
+.insta .tip { background:#e1306c; }
+.insta .tip::after { border-top-color:#e1306c; }
+
+/* Github */
+.git:hover { background:#6e40c9; color:white; }
+.git .tip { background:#6e40c9; }
+.git .tip::after { border-top-color:#6e40c9; }
+
+/* Youtube */
+.yt:hover { background:#ff0000; color:white; }
+.yt .tip { background:#ff0000; }
+.yt .tip::after { border-top-color:#ff0000; }
+
+</style>
+</head>
+
+<body>
+
+<div class="social-wrap">
+
+  <!-- Facebook -->
+  <div class="btn fb">
+    <span class="tip">Facebook</span>
+    <i class="fab fa-facebook-f"></i>
+  </div>
+
+  <!-- Instagram -->
+  <div class="btn insta">
+    <span class="tip">Instagram</span>
+    <i class="fab fa-instagram"></i>
+  </div>
+
+  <!-- Github -->
+  <div class="btn git">
+    <span class="tip">Github</span>
+    <i class="fab fa-github"></i>
+  </div>
+
+  <!-- Youtube -->
+  <div class="btn yt">
+    <span class="tip">Youtube</span>
+    <i class="fab fa-youtube"></i>
+  </div>
+
+</div>
+
+</body>
+</html>
