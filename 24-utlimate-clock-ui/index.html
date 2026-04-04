@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Clock UI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* Animated Background */
+body::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background: linear-gradient(45deg,#ff00cc,#3333ff,#00ffcc,#ffcc00);
+    animation: bgMove 10s linear infinite;
+    z-index:-1;
+}
+
+@keyframes bgMove{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(-25%,-25%);}
+    100%{transform:translate(0,0);}
+}
+
+/* Card */
+.card{
+    width:450px;
+    padding:25px;
+    border-radius:20px;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter:blur(25px);
+    color:#fff;
+    box-shadow:0 0 50px rgba(0,0,0,0.7);
+}
+
+/* Header */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* Toggle */
+.toggle button{
+    border:none;
+    padding:6px 12px;
+    margin:2px;
+    border-radius:20px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.1);
+    color:#fff;
+}
+
+.toggle .active{
+    background:#00ffcc;
+    color:#000;
+}
+
+/* Time */
+.time{
+    font-size:55px;
+    text-align:center;
+    margin:20px 0;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 10px #00ffcc;}
+    to{ text-shadow:0 0 30px #00ffcc;}
+}
+
+/* Controls */
+.controls{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+}
+
+/* Select */
+select{
+    padding:5px;
+    border-radius:10px;
+    border:none;
+}
+
+/* Footer */
+.footer{
+    text-align:center;
+    margin-top:15px;
+    font-size:12px;
+    opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <h3>âš¡ Ultimate Clock</h3>
+        <div class="toggle">
+            <button id="b12" class="active">12h</button>
+            <button id="b24">24h</button>
+        </div>
+    </div>
+
+    <div class="time" id="time">00:00:00</div>
+    <div id="date" style="text-align:center;"></div>
+
+    <div class="controls">
+        <select id="timezone">
+            <option value="Asia/Kolkata">India</option>
+            <option value="America/New_York">USA</option>
+            <option value="Europe/London">UK</option>
+            <option value="Asia/Dubai">Dubai</option>
+        </select>
+
+        <button id="soundBtn">í´Š Sound</button>
+    </div>
+
+    <div class="footer">Next Level UI â€¢ Dev Mode ON</div>
+
+</div>
+
+<script>
+
+let is24 = false;
+let soundOn = false;
+
+const timeEl = document.getElementById("time");
+const dateEl = document.getElementById("date");
+const tzSelect = document.getElementById("timezone");
+
+const b12 = document.getElementById("b12");
+const b24 = document.getElementById("b24");
+const soundBtn = document.getElementById("soundBtn");
+
+/* Toggle */
+b12.onclick = () => {
+    is24 = false;
+    b12.classList.add("active");
+    b24.classList.remove("active");
+};
+
+b24.onclick = () => {
+    is24 = true;
+    b24.classList.add("active");
+    b12.classList.remove("active");
+};
+
+/* Sound */
+soundBtn.onclick = () => {
+    soundOn = !soundOn;
+    soundBtn.innerText = soundOn ? "í´Š ON" : "í´‡ OFF";
+};
+
+function tickSound(){
+    if(soundOn){
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        osc.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.05);
+    }
+}
+
+function updateClock(){
+    const now = new Date();
+
+    const options = {
+        timeZone: tzSelect.value,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: !is24
+    };
+
+    const timeString = new Intl.DateTimeFormat([], options).format(now);
+    timeEl.innerHTML = timeString;
+
+    const dateOptions = {
+        weekday:'long',
+        year:'numeric',
+        month:'long',
+        day:'numeric',
+        timeZone: tzSelect.value
+    };
+
+    dateEl.innerHTML = new Intl.DateTimeFormat([], dateOptions).format(now);
+
+    tickSound();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+</script>
+
+</body>
+</html>
